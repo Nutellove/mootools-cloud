@@ -1,0 +1,1 @@
+This is a repository for MooTools scripts, plugins and enhancements.
