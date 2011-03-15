@@ -3,6 +3,10 @@ Element.implement ({
   /**
    * Centers vertically this Element in its parent element, or in the provided parent
    *
+   * Example of use :
+   * $('#theElementToCenterVertically').centerVertically();
+   * Yeah, that's it !
+   *
    * @author  Antoine Goutenoir http://antoine.goutenoir.com
    * @param  Element parent Optional. The parent element, defaults to the first parent.
    * @return Element This Element
