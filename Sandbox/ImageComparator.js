@@ -22,15 +22,24 @@ ImageComparator = new Class({
       },
       events: {
         mouseover: function(e){
-          // Capture mouse position
-          //
+          // Capture mouse position relatively to the element
+          var pos = this.getPosition();
+          var x = e.page.x - pos.x;
+          var y = e.page.y - pos.y;
+          // TODO
+          console.log ("X : "+x);
+          console.log ("Y : "+y);
         }
       }
     });
     var imgL = new Element('div', {
       'class': 'imgL',
       styles: {
-
+        'background-position': 'left center',
+        'background-repeat':   'no-repeat',
+        'background-image':    'url('+imgSrcL+')',
+        width:  width+'px',
+        height: height+'px'
       }
     });
   }
