@@ -30,6 +30,13 @@
  *
  * new ZoomInside ('a.myZoomyLinks');
  *
+ *
+ * Usage as Element method :
+ *
+ * $('#theElement').zoomInside();
+ * $$('a.myZoomyLinks').zoomInside({duration:1, zoomedScale:1.5});
+ *
+ *
  * Do not forget to call ZoomInside within window.addEvent('load', function(){ ... });
  *
  * @dependency: Mootools 1.3
