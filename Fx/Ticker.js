@@ -43,3 +43,21 @@ Fx.Ticker = new Class({
   }
 
 });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Element.implement ({
+  ticker: function(from, to, options)
+  {
+    if (!this.tickerFx) {
+      this.tickerFx = new Fx.Ticker (this, options);
+    }
+    if (arguments.length == 1) {
+      this.tickerFx.start (from);
+    } else {
+      this.tickerFx.start (from, to);
+    }
+
+    return this.tickerFx;
+  }
+});
