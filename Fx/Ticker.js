@@ -47,10 +47,16 @@ Fx.Ticker = new Class({
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Element.implement ({
+
   ticker: function(from, to, options)
   {
     if (!this.tickerFx) {
-      this.tickerFx = new Fx.Ticker (this, options);
+      var defaultOptions = {
+        duration: 3300,
+        transition: 'quad:out',
+        link: 'cancel'
+      };
+      this.tickerFx = new Fx.Ticker (this, Object.merge(defaultOptions, options));
     }
     if (arguments.length == 1) {
       this.tickerFx.start (from);
@@ -60,4 +66,5 @@ Element.implement ({
 
     return this.tickerFx;
   }
+
 });
