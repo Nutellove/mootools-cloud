@@ -1,5 +1,5 @@
 /**
- * Make a number in the innerText of a DOM Element smoothly change from one value to another !
+ * Make a number in the innerText of a DOM Element smoothly change from one value to another
  *
  * Example usage :
  *
