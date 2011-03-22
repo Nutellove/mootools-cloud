@@ -3,7 +3,7 @@ Element.implement ({
   /**
    * Checks if Element content overflows
    *
-   * @author  Antoine Goutenoir http://antoine.goutenoir.com
+   * @author Antoine Goutenoir http://antoine.goutenoir.com
    * @return bool
    */
   isOverflowing: function(){
@@ -13,6 +13,7 @@ Element.implement ({
     var isOverflowing = this.clientWidth  < this.scrollWidth
                      || this.clientHeight < this.scrollHeight;
     this.style.overflow = curOverflow;
+
     return isOverflowing;
   },
 

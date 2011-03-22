@@ -9,6 +9,7 @@ Element.implement ({
    *   this.changeTypefaceColor ('#FF3399');
    * });
    *
+   * @author Antoine Goutenoir http://antoine.goutenoir.com
    * @param string color eg: #FF3399
    */
   changeTypefaceColor: function(color){
