@@ -14,6 +14,7 @@
  * @option string eventStop  Name of the event that reverts the text translation to origin
  *
  * @author antoine.goutenoir@gmail.com
+ * @require MooTools 1.3.*
  * @licence GNU/GPL
  * 
  */

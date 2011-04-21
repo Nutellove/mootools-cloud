@@ -9,6 +9,8 @@
  *    );
  *  });
  *
+ * @version 0.2
+ *
  * @author  Antoine Goutenoir http://antoine.goutenoir.com
  * @require MooTools 1.2 (might work for 1.3 or later)
  */

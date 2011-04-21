@@ -39,8 +39,9 @@
  *
  * Do not forget to call ZoomInside within window.addEvent('load', function(){ ... });
  *
- * @dependency: Mootools 1.3
- * @author: Antoine Goutenoir <antoine.goutenoir@gmail.com>
+ * @version 0.1
+ * @require Mootools 1.3.*
+ * @author  Antoine Goutenoir <antoine.goutenoir@gmail.com>
  */
 
 var ZoomInside = new Class ({
