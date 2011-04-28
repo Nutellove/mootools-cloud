@@ -164,8 +164,6 @@ var ScissorGallery = new Class({
     var that = this;
     this.navigation.getElements(this.options.navSelector).each (function(el, i, els){
       el.addEvent ('click', function(e){
-//        els.removeClass ('active');
-//        el.addClass ('active');
         that.goToPage(i);
 
         return false;
