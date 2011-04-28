@@ -4,7 +4,6 @@
  * with a marquee-like effect on a mouseover.
  * It only acts like horizontal marquee, though.
  *
- * @version : 0.1
  *
  * @param mixed  el    Element to link on
  * @param string event Name of the trigger event
@@ -13,14 +12,15 @@
  * @option string eventStart Name of the event that starts the text translation
  * @option string eventStop  Name of the event that reverts the text translation to origin
  *
- * @author antoine.goutenoir@gmail.com
+ * @source https://github.com/Nutellove/mootools-cloud
  * @require MooTools 1.3.*
  * @licence GNU/GPL
+ * @version 0.1
  * 
  */
 var OverflowMarquee = new Class({
-  Implements: [Options],
 
+  Implements: [Options],
   options: {
     speed      : 30,         // in pixels/second
     eventStart : 'mouseenter',

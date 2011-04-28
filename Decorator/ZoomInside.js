@@ -41,7 +41,8 @@
  *
  * @version 0.1
  * @require Mootools 1.3.*
- * @author  Antoine Goutenoir <antoine.goutenoir@gmail.com>
+ * @source https://github.com/Nutellove/mootools-cloud
+ * @licence GNU/GPL
  */
 
 var ZoomInside = new Class ({

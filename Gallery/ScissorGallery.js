@@ -44,6 +44,8 @@
  * @option spanInNavigation [false] If true, injects a span in the navigation li, useful sometimes for complex styling
  * @option scrollOptions Fx Options to pass to Fx.Scroll  (duration, transition, link, and such)
  *
+ * @licence GNU/GPL
+ * @require MooTools 1.3.*
  * @source https://github.com/Nutellove/mootools-cloud
  * @version 0.1
  */
