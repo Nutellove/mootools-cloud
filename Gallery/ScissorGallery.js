@@ -32,6 +32,11 @@
       <div id="navigation"></div>                              -- if you want a navigation, create an empty div anywhere
     </div>
  *
+ * @param normalFrame   An Element or its ID, this is the frame with overflow hidden ('leftContentFrame' in the above example)
+ * @param reversedFrame An Element or its ID, this is the frame with overflow hidden ('rightContentFrame' in the above example)
+ * @param navigation    Optional. Set to null to desactivate. The Element or ID of the navigation container
+ * @param options       Usual Options Object, see below for details
+ *
  * @option autoReverse [true] Will automatically reverse the order of the elements in the reversedFrame
  * @option pageSelector ['div'] CSS Selector used to identify pages within a frame content
  * @option navSelector ['li'] CSS Selector identifying the navigation links within the navigation element
@@ -205,6 +210,12 @@ var ScissorGallery = new Class({
   },
   goToNextPage: function () {
     return this.goToPage (this.currentPage + 1);
+  },
+  goToFirstPage: function () {
+    return this.goToPage (0);
+  },
+  goToLastPage: function () {
+    return this.goToPage (this.getNumberOfPages()-1);
   }
 
 });
