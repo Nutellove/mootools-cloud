@@ -45,7 +45,7 @@
  * @option scrollOptions Fx Options to pass to Fx.Scroll  (duration, transition, link, and such)
  *
  * @licence GNU/GPL
- * @require MooTools 1.3.*
+ * @require MooTools 1.3+
  * @source https://github.com/Nutellove/mootools-cloud
  * @version 0.1
  */

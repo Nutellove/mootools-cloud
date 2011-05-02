@@ -1,6 +1,10 @@
 /**
  * Allows for smooth Mootools Fx with transform scale CSS3 property
  *
+ * @source https://github.com/Nutellove/mootools-cloud
+ * @require MooTools 1.3+
+ * @licence GNU/GPL
+ * @version 0.1
  */
 
 Fx.CSS.Parsers.extend({

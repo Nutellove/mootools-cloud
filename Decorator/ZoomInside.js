@@ -40,7 +40,7 @@
  * Do not forget to call ZoomInside within window.addEvent('load', function(){ ... });
  *
  * @version 0.1
- * @require Mootools 1.3.*
+ * @require Mootools 1.3+
  * @source https://github.com/Nutellove/mootools-cloud
  * @licence GNU/GPL
  */

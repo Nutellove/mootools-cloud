@@ -1,9 +1,8 @@
 /**
  * Creates a superposition of 2 images
  *
- *
  * @author  Antoine Goutenoir http://antoine.goutenoir.com
- * @require MooTools 1.3 or later
+ * @require MooTools 1.3+
  */
 ImageComparator = new Class({
 

@@ -13,7 +13,7 @@
  * @option string eventStop  Name of the event that reverts the text translation to origin
  *
  * @source https://github.com/Nutellove/mootools-cloud
- * @require MooTools 1.3.*
+ * @require MooTools 1.3+
  * @licence GNU/GPL
  * @version 0.1
  * 
