@@ -75,7 +75,7 @@
       var firstChild = h.firstChild;
       h.insertBefore(ss, firstChild);
     } catch (e) {
-      // squelch
+      // shenanigans
     }
   };
 

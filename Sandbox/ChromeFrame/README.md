@@ -1,8 +1,8 @@
-
+DESCRIPTION
+===========
 
 Easily add Google Chrome Frame installation button in your website
 
-Note : may not need mootools ;)
 
 INSTALL
 =======
