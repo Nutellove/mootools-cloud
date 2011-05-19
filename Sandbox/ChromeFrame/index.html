@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Chrome Frame Install Test Page</title>
+  <script type="text/javascript" src="CFInstall.js"></script>
+</head>
+<body>
+
+<style type="text/css">
+  #iframeGCF {
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    margin: 0; padding: 0;
+    border: 2px solid blue;
+    overflow: hidden;
+    /*width:  200px;*/
+    height: 50px;
+    opacity: 0.3;
+    filter: alpha(opacity = 30);
+    zoom: 1.5;
+  }
+
+
+</style>
+
+  <p>
+    <input type="button" id="installGCF" value="INSTALL" />
+  </p>
+
+  <iframe id="iframeGCF" src="iframe.html" scrolling="no" width="150"></iframe>
+
+
+<script type="text/javascript">
+
+CFInstall.check({
+  mode: 'inline',
+  preventPrompt: true
+});
+
+var iframeGCF = document.getElementById('iframeGCF');
+iframeGCF.onload = function () {
+  iframeGCF.contentWindow.scrollTo(10,350);
+}
+
+</script>
+
+</body>
+</html>

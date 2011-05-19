@@ -3,6 +3,13 @@ DESCRIPTION
 
 Easily add Google Chrome Frame installation button in your website
 
+NOTES
+=====
+
+CSS zoom on iframe :
+
+* IE7 : changes content AND iframe diemnsions
+* IE8 : changes content dimensions only
 
 INSTALL
 =======
