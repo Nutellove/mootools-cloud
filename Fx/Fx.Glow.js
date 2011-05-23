@@ -3,25 +3,25 @@
  *
  * @usage
  * Single glow, default parameters :
-    window.addEvent('domready', function(){
-      document.id('myElementID').addEvent ('click', function(e){
-        this.glow (1.5);
-      });
-    });
+ window.addEvent('domready', function(){
+ document.id('myElementID').addEvent ('click', function(e){
+ this.glow (1.5);
+ });
+ });
  * or, you can chain glows like all FXs:
-    window.addEvent('domready', function(){
-      document.id('myElementID').addEvent ('click', function(e){
-        this.glow (1, 1.15, {
-          duration: 150,
-          transition: 'linear'
-        }).chain(function(){
-          this.glow (1, 1.5, {
-            duration: 500,
-            transition: 'quad:out'
-          });
-        }.bind(this));
-      });
-    });
+ window.addEvent('domready', function(){
+ document.id('myElementID').addEvent ('click', function(e){
+ this.glow (1, 1.15, {
+ duration: 150,
+ transition: 'linear'
+ }).chain(function(){
+ this.glow (1, 1.5, {
+ duration: 500,
+ transition: 'quad:out'
+ });
+ }.bind(this));
+ });
+ });
  *
  * @version : 0.1
  *
@@ -49,12 +49,11 @@ Fx.Glow = new Class({
 //    }
   },
 
-  initialize: function(element, options)
-  {
-    this.parent (options);
-    this.element = docuùent.id (element);
+  initialize: function(element, options) {
+    this.parent(options);
+    this.element = document.id(element);
 
-    this.addEvent('complete', function(){
+    this.addEvent('complete', function() {
       this.glowElement.destroy();
       this.resetGlowElement();
     });
@@ -62,12 +61,11 @@ Fx.Glow = new Class({
     this.resetGlowElement();
   },
 
-  resetGlowElement: function ()
-  {
-    this.glowElement = this.element.clone (true, true);
+  resetGlowElement: function () {
+    this.glowElement = this.element.clone(true, true);
     var position = this.element.getPosition();
     this.glowElement.setStyle('position', 'absolute');
-    this.glowElement.setStyle('top',  position.y);
+    this.glowElement.setStyle('top', position.y);
     this.glowElement.setStyle('left', position.x);
     this.glowElement.setStyle('opacity', 0);
     this.setStyleTransformScale(this.getStyleTransformScale(this.element), this.glowElement);
@@ -80,11 +78,10 @@ Fx.Glow = new Class({
   /**
    * Basic mutator, sets the glow fx to the specified value
    */
-  set: function (value)
-  {
+  set: function (value) {
     this.setStyleTransformScale(value, this.glowElement);
 
-    var opacity = Math.min(1, Math.abs( (this.to - value) / (this.to - this.from) ));
+    var opacity = Math.min(1, Math.abs((this.to - value) / (this.to - this.from)));
     this.glowElement.setStyle('opacity', opacity);
 
     //console.log ('set opacity : '+opacity);
@@ -93,8 +90,7 @@ Fx.Glow = new Class({
     return this;
   },
 
-  start: function(from, to)
-  {
+  start: function(from, to) {
     if (typeof to == 'undefined') {
       to = from;
       from = this.getStyleTransformScale(this.element);
@@ -105,13 +101,12 @@ Fx.Glow = new Class({
       }
     }
 
-    return this.parent (from, to);
+    return this.parent(from, to);
   },
 
 //// UGLY STYLE MUTACCESSORS ///////////////////////////////////////////////////////////////////////////////////////////
 
-  getStyleTransformScale: function (element)
-  {
+  getStyleTransformScale: function (element) {
     if (typeof element == 'undefined' || element == null) element = this.element;
     var scale;
     if ((scale = element.getStyle('-webkit-transform')) && scale != 'none') {
@@ -131,11 +126,10 @@ Fx.Glow = new Class({
     }
   },
 
-  setStyleTransformScale: function (scale, element)
-  {
+  setStyleTransformScale: function (scale, element) {
     if (typeof element == 'undefined' || element == null) element = this.element;
 
-    scale = 'scale('+scale+')';
+    scale = 'scale(' + scale + ')';
     element.setStyle('-webkit-transform', scale);
     element.setStyle('-moz-transform', scale);
     element.setStyle('-o-transform', scale);
@@ -148,23 +142,22 @@ Fx.Glow = new Class({
 
 //// ELEMENT METHOD ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Element.implement ({
+Element.implement({
 
-  glow: function (from, to, options)
-  {
+  glow: function (from, to, options) {
     if (!this.glowFx) {
       var defaultOptions = {
         // shenanigans !
       };
-      this.glowFx = new Fx.Glow (this, Object.merge(defaultOptions, options));
+      this.glowFx = new Fx.Glow(this, Object.merge(defaultOptions, options));
     } else {
       this.glowFx.setOptions(options);
     }
 
     if (arguments.length == 1) {
-      this.glowFx.start (from);
+      this.glowFx.start(from);
     } else {
-      this.glowFx.start (from, to);
+      this.glowFx.start(from, to);
     }
 
     return this.glowFx;
@@ -176,16 +169,16 @@ Element.implement ({
 
 Fx.CSS.Parsers.extend({
 
-	TransformScale: {
-		parse: function(value){
-			return ((value = value.match(/^scale\(([0-9]+\.?[0-9]*)\)$/i))) ? value[1] : false;
-		},
-		compute: function(from, to, delta){
-			return Fx.compute(from, to, delta);
-		},
-		serve: function(value){
-			return 'scale('+value+')';
-		}
-	}
+  TransformScale: {
+    parse: function(value) {
+      return ((value = value.match(/^scale\(([0-9]+\.?[0-9]*)\)$/i))) ? value[1] : false;
+    },
+    compute: function(from, to, delta) {
+      return Fx.compute(from, to, delta);
+    },
+    serve: function(value) {
+      return 'scale(' + value + ')';
+    }
+  }
 
 });
