@@ -46,8 +46,15 @@
  *
  * @licence GNU/GPL
  * @require MooTools 1.3+
+ * @version 0.2
+ * 
+ * @provide ScissorGallery
+ * @depends Element.reverseChildren (defined below)
+ * 
  * @source https://github.com/Nutellove/mootools-cloud
- * @version 0.1
+ * @author antoine.goutenoir@gmail.com
+ *
+ * @todo Propose mouse scroll and keyboard Events management, maybe in new class ?
  */
 var ScissorGallery = new Class({
 
@@ -75,7 +82,7 @@ var ScissorGallery = new Class({
     this.currentPage = 0;
 
     if (this.options.autoReverse) {
-      this.reverseChildrenOrder (this.reversedFrame.getElement('div'));
+      this.reversedFrame.getElement('div').reverseChildren();
     }
 
     var scrollOptions = Object.merge({
@@ -122,19 +129,6 @@ var ScissorGallery = new Class({
   },
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  /**
-   * Reverses the order of the children in the specified parent Element
-   * NB : this should be Element.implement
-   * @param parent
-   */
-  reverseChildrenOrder: function (parent) {
-    var children = parent.getChildren();
-    parent.empty();
-    children.reverse().inject(parent);
-
-    return this;
-  },
 
   /**
    * Builds the DOM of the navigation list and injects it inside the $(navigation) element
@@ -216,6 +210,24 @@ var ScissorGallery = new Class({
   },
   goToLastPage: function () {
     return this.goToPage (this.getNumberOfPages()-1);
+  }
+
+});
+
+//// ELEMENT IMPLEMENT /////////////////////////////////////////////////////////////////////////////////////////////////
+
+Element.implement({
+
+  /**
+   * Reverses the order of the children
+   * @provide Element.reverseChildren
+   */
+  reverseChildren: function () {
+    var children = this.getChildren();
+    this.empty();
+    children.reverse().inject(this);
+
+    return this;
   }
 
 });
