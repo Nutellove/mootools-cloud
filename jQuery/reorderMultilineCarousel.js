@@ -32,7 +32,7 @@
       s += nbDummies;
     }
 
-    // Rebuild children (could not .append() directly ?)
+    // Rebuild children (could not .append() dummies directly ?)
     children = that.children();
 
     var newOrder = [];

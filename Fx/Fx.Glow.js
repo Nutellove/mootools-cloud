@@ -37,12 +37,16 @@
  * @author antoine.goutenoir@gmail.com
  * @licence GNU/GPL
  *
+ * @todo IE7 graceful degradation
+ *       opacity start/stop
+ *
  */
 Fx.Glow = new Class({
 
   Extends: Fx,
 
   options: {
+    position: 'below'
 ////// UNUSED
 //    defaultGlow : {
 //      delay:        0,
@@ -63,6 +67,12 @@ Fx.Glow = new Class({
       this.glowElement.destroy();
       this.resetGlowElement();
     });
+
+    if (this.element.getStyle('position') == 'static') {
+      this.element.setStyle('position', 'relative');
+    }
+    this.zIndex = this.element.getStyle('z-index');
+    if (this.zIndex == null) this.zIndex = 1;
 
     this.resetGlowElement();
   },
@@ -147,6 +157,7 @@ Element.implement({
   /**
    * Gets the CSS3 scale property
    * NB : may not work properly if element has rotate or skew
+   * @depends Fx.CSS.Parsers.TransformScale
    */
   getStyleTransformScale: function () {
     var scale;
