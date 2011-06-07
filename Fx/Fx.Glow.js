@@ -46,7 +46,8 @@ Fx.Glow = new Class({
   Extends: Fx,
 
   options: {
-    position: 'below'
+    position: 'below' // will determine the z-index of the clone. Other possible value : 'above'.
+   ,zIndex:   2       // z-index given to the element if it has none
 ////// UNUSED
 //    defaultGlow : {
 //      delay:        0,
@@ -72,7 +73,7 @@ Fx.Glow = new Class({
       this.element.setStyle('position', 'relative');
     }
     this.zIndex = this.element.getStyle('z-index');
-    if (this.zIndex == null) this.zIndex = 1;
+    if (typeof this.zIndex == 'undefined' || this.zIndex == null) this.zIndex = this.options.zIndex;
 
     this.resetGlowElement();
   },
@@ -84,6 +85,7 @@ Fx.Glow = new Class({
     this.glowElement.setStyle('top', position.y);
     this.glowElement.setStyle('left', position.x);
     this.glowElement.setStyle('opacity', 0);
+    this.glowElement.setStyle('z-index', this.zIndex + ((this.options.position=='below')?-1:1));
     this.glowElement.setStyleTransformScale(this.element.getStyleTransformScale());
 
     this.glowElement.inject(document.body);
