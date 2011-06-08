@@ -3,7 +3,7 @@
  * getting it back on blur if user did not define one after focus
  *
  * Usage :
- *   jQuery('myCssSelector').addSmartDefaultValueBehavior();
+ *   jQuery('myCssSelectorForOneOrManyElements').addSmartDefaultValueBehavior();
  *
  * @author antoine.goutenoir@gmail.com
  *
@@ -13,16 +13,20 @@
 
   $.fn.addSmartDefaultValueBehavior = function () {
 
-    var that = $(this);
+    jQuery.each($(this), function(i,el){
 
-    that.data('smartValue', that.attr('value'));
+      var that = $(el);
 
-    that.focusin (function(){
-      if ($(this).val() == $(this).data('smartValue')) $(this).val('');
-    });
+      that.data('smartValue', that.attr('value'));
 
-    that.focusout (function(){
-      if ($(this).val() == '') $(this).val($(this).data('smartValue'));
+      that.focusin (function(){
+        if ($(this).val() == $(this).data('smartValue')) $(this).val('');
+      });
+
+      that.focusout (function(){
+        if ($(this).val() == '') $(this).val($(this).data('smartValue'));
+      });
+
     });
 
     return this;
