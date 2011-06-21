@@ -1,16 +1,15 @@
-/**
- * Prepares an element to behave like a smart input with default value,
- * getting it back on blur if user did not define one after focus
- *
- * Usage :
- *   jQuery('myCssSelectorForOneOrManyElements').addSmartDefaultValueBehavior();
- *
- * @author antoine.goutenoir@gmail.com
- *
- * @return this
- */
 (function( $ ){
-
+  /**
+   * Prepares an element to behave like a smart input with default value,
+   * getting it back on blur if user did not define one after focus
+   *
+   * Usage :
+   *   jQuery('myCssSelectorForOneOrManyElements').addSmartDefaultValueBehavior();
+   *
+   * @author Antoine Goutenoir <antoine@goutenoir.com>
+   *
+   * @return this
+   */
   $.fn.addSmartDefaultValueBehavior = function () {
 
     jQuery.each($(this), function(i,el){

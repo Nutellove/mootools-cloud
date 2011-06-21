@@ -1,16 +1,15 @@
-/**
- * The targeted element has a number of children floating in it, this will reorder them as to appear ordered
- * page per page, each page containing rows x cols elements.
- * NB : we assume its dimensions have already been calculated to fit the passed number of elements in one page
- *
- * @author antoine.goutenoir@gmail.com
- *
- * @param  cols Number of columns of the new reorganisation
- * @param  rows Number of rows of the new reorganisation
- * @return this
- */
 (function( $ ){
-
+  /**
+   * The targeted element has a number of children floating in it, this will reorder them as to appear ordered
+   * page per page, each page containing rows x cols elements.
+   * NB : we assume its dimensions have already been calculated to fit the passed number of elements in one page
+   *
+   * @author Antoine Goutenoir <antoine@goutenoir.com>
+   *
+   * @param  cols Number of columns of the new reorganisation
+   * @param  rows Number of rows of the new reorganisation
+   * @return this
+   */
   $.fn.reorderMultilineCarouselFloatingElements = function (cols, rows) {
 
     if (rows < 1 || cols < 1) return this;
