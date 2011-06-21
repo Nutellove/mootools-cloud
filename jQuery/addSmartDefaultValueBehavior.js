@@ -16,14 +16,14 @@
 
       var that = $(el);
 
-      that.data('smartValue', that.attr('value'));
+      that.data('initialValue', that.attr('value'));
 
       that.focusin (function(){
-        if ($(this).val() == $(this).data('smartValue')) $(this).val('');
+        if ($(this).val() == $(this).data('initialValue')) $(this).val('');
       });
 
       that.focusout (function(){
-        if ($(this).val() == '') $(this).val($(this).data('smartValue'));
+        if ($(this).val() == '') $(this).val($(this).data('initialValue'));
       });
 
     });
