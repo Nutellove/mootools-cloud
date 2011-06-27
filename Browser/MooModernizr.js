@@ -64,8 +64,8 @@
 	
 	/**
 	 * @return {Array} The javascript style properties (e.g. MozBackgroundImage)
-	 * @param {String} Property
-	 * @param {Array|String} extend the properties list
+	 * @param {String} prop Property
+	 * @param {Array|String} extend Properties to append to the list
 	 */
 	getPropsAll = function(prop,extend){
 
