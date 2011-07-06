@@ -2,15 +2,15 @@
 <html>
 <head>
   <title>Chrome Frame Install Test Page</title>
-  <script type="text/javascript" src="CFInstall.js"></script>
+  <script type="text/javascript" src="chrome-frame-popin.js"></script>
 </head>
 <body>
 
 <style type="text/css">
   #iframeGCF {
-    position: absolute;
+    position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     
     margin: 0; padding: 0;
     border: 2px solid blue;
@@ -25,19 +25,17 @@
 
 </style>
 
-  <p>
-    <input type="button" id="installGCF" value="INSTALL" />
-  </p>
 
-  <iframe id="iframeGCF" src="iframe.html" scrolling="no" width="150"></iframe>
+<h1>This is a test page</h1>
+
+<p>This is some dummy content. Lorem ipsum dolor sit amet...</p>
+
+<p>If you are visiting this page with Internet Explorer, a popin should appear, prompting you to install Google Chrome Frame</p>
+
+<iframe id="iframeGCF" src="chrome-frame-iframe.html" scrolling="no" width="150px"></iframe>
 
 
 <script type="text/javascript">
-
-CFInstall.check({
-  mode: 'inline',
-  preventPrompt: true
-});
 
 var iframeGCF = document.getElementById('iframeGCF');
 iframeGCF.onload = function () {
