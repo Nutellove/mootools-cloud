@@ -11,14 +11,16 @@
  *
  * @version 0.2
  *
+ * @author Antoine Goutenoir <antoine@goutenoir.com>
  * @source https://github.com/Nutellove/mootools-cloud
  * @licence GNU/GPL
- * @require MooTools 1.2 (might work for 1.3 or later)
+ * @require MooTools 1.2 or later
  */
 
 var InternalBorder = new Class({
 
   Implements: [Options, Events],
+  
   options: {
     color: {
       left   : 'white',
@@ -58,9 +60,14 @@ var InternalBorder = new Class({
     }
   },
 
-  // Creates the div upper layer that will contain the border
+  /**
+   * Creates the div upper layer that will contain the border
+   * @param element
+   */
   createLayer: function(element){
-    element.setStyle('position', 'relative'); // so position:absolute work
+    if (element.getStyle('position') == 'static') {
+      element.setStyle('position', 'relative'); // so position:absolute work
+    }
     var size = element.getSize();
     var layer = new Element ('div', {
       'class' : this.options.className,
@@ -94,6 +101,8 @@ var InternalBorder = new Class({
       });
     }
     layer.inject(element, 'bottom');
+
+    return this;
   },
 
   // Hides all layers
@@ -101,17 +110,26 @@ var InternalBorder = new Class({
     this.elements.each(function(element){
       element.getFirst('div.'+this.options.className).fade('out');
     }.bind(this));
+
+    return this;
   },
 
   // Helper func to generate border style property
   _generateBorderStyle: function (position){
-    var r = this.options.width[position] +
+    return  this.options.width[position] +
             'px solid ' +
             this.options.color[position];
-    return r;
   }
 
 });
+
+
+// ELEMENT IMPLEMENT ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 
 /**********************************************************************************************************************/
 
