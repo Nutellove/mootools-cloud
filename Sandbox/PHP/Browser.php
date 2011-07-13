@@ -3,62 +3,84 @@
 class Browser
 {
 
-  function __construct($userAgent)
+  function __construct ($userAgent='')
   {
     if (empty($userAgent)) {
       $userAgent = $_SERVER['HTTP_USER_AGENT'];
     }
-    $bname = 'Unknown';
-    $platform = 'Unknown';
+    $browserName = 'Unknown';
+    $browserVersion = '';
+    $platformName = 'Unknown';
+    $platformVersion = '';
     $ub = 'Unknown';
     $version = "";
 
-    //First get the platform?
-    if (preg_match('/linux/i', $userAgent)) {
-      $platform = 'linux';
+    $matches = array();
+
+////// PLATFORM DETECTION //////////////////////////////////////////////////////////////////////////////////////////////
+
+    // IPAD
+    if (preg_match('/ipad/i', $userAgent)) {
+      $platformName = 'iPad';
+      if (preg_match('/ipad.*?cpu os ((?:[0-9]+[_.]?)+)/i', $userAgent, $matches)) {
+        $platformVersion = str_replace($matches[1], '_', '.');
+      }
     }
+    // IPHONE
+    elseif (preg_match('/iphone/i', $userAgent)) {
+      $platformName = 'iPhone';
+      if (preg_match('/iphone.*? os ((?:[0-9]+[_.]?)+)/i', $userAgent, $matches)) {
+        $platformVersion = str_replace($matches[1], '_', '.');
+      }
+    }
+    // ANDROID
+    elseif (preg_match('/android/i', $userAgent)) {
+      $platformName = 'Android';
+      if (preg_match('/android ((?:[0-9]+\.?)+)/i', $userAgent, $matches)) {
+        $platformVersion = $matches[1];
+      }
+    }
+    // LINUX
+    elseif (preg_match('/linux/i', $userAgent)) {
+      $platformName = 'Linux';
+    }
+    // MAC
     elseif (preg_match('/macintosh|mac os x/i', $userAgent)) {
-      $platform = 'mac';
+      $platformName = 'Mac';
     }
+    // WINDOW$
     elseif (preg_match('/windows|win32/i', $userAgent)) {
-      $platform = 'windows';
+      $platformName = 'Windows';
     }
+
+////// BROWSER NAME DETECTION //////////////////////////////////////////////////////////////////////////////////////////
 
     // Next get the name of the useragent yes seperately and for good reason
     if (preg_match('/MSIE/i', $userAgent) && !preg_match('/Opera/i', $userAgent)) {
-      $bname = 'Internet Explorer';
-      $ub = "MSIE";
+      $browserName = 'IE';
+      $ub = 'MSIE';
     }
-    elseif (preg_match('/Firefox/i', $userAgent))
-    {
-      $bname = 'Mozilla Firefox';
-      $ub = "Firefox";
+    elseif (preg_match('/Firefox/i', $userAgent)) {
+      $browserName = 'Firefox';
     }
-    elseif (preg_match('/Chrome/i', $userAgent))
-    {
-      $bname = 'Google Chrome';
-      $ub = "Chrome";
+    elseif (preg_match('/Chrome/i', $userAgent)) {
+      $browserName = 'Chrome';
     }
-    elseif (preg_match('/Safari/i', $userAgent))
-    {
-      $bname = 'Apple Safari';
-      $ub = "Safari";
+    elseif (preg_match('/Safari/i', $userAgent)) {
+      $browserName = 'Safari';
     }
-    elseif (preg_match('/Opera/i', $userAgent))
-    {
-      $bname = 'Opera';
-      $ub = "Opera";
+    elseif (preg_match('/Opera/i', $userAgent)) {
+      $browserName = 'Opera';
     }
-    elseif (preg_match('/Netscape/i', $userAgent))
-    {
-      $bname = 'Netscape';
-      $ub = "Netscape";
+    elseif (preg_match('/Netscape/i', $userAgent)) {
+      $browserName = 'Netscape';
     }
+
+    if (empty($ub)) $ub = $browserName;
 
     // finally get the correct version number
     $known = array('Version', $ub, 'other');
-    $pattern = '#(?<browser>' . join('|', $known) .
-               ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+    $pattern = '#(?<browser>' . join('|', $known) . ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
     if (!preg_match_all($pattern, $userAgent, $matches)) {
       // we have no matching number just continue
     }
@@ -85,16 +107,17 @@ class Browser
     }
 
     $this->userAgent = $userAgent;
-    $this->browserName = $bname;
+    $this->browserName = $browserName;
     $this->browserVersion = $version;
-    $this->platform = $platform;
+    $this->platformName = $platformName;
+    $this->platformVersion = $platformVersion;
     $this->pattern = $pattern;
 
     return array(
       'userAgent' => $userAgent,
-      'name' => $bname,
+      'name' => $browserName,
       'version' => $version,
-      'platform' => $platform,
+      'platform' => $platformName,
       'pattern' => $pattern
     );
   }
@@ -116,9 +139,14 @@ class Browser
     return $this->browserVersion;
   }
 
-  public function getPlatform()
+  public function getPlatformName()
   {
-    return $this->platform;
+    return $this->platformName;
+  }
+
+  public function getPlatformVersion()
+  {
+    return $this->platformVersion;
   }
 
   public function getPattern()
