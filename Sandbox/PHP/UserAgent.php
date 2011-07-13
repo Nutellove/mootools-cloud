@@ -1,19 +1,25 @@
 <?php
 
-class Browser
+/**
+ * Detects stuff about the visitor from the UserAgent header string
+ */
+class UserAgent
 {
 
+  /**
+   * Constructor
+   * @param string $userAgent Optional. If not set, will use the one from $_SERVER
+   */
   function __construct ($userAgent='')
   {
     if (empty($userAgent)) {
       $userAgent = $_SERVER['HTTP_USER_AGENT'];
     }
-    $browserName = 'Unknown';
-    $browserVersion = '';
-    $platformName = 'Unknown';
+    $browserName     = 'Unknown';
+    $browserVersion  = '';
+    $platformName    = 'Unknown';
     $platformVersion = '';
     $ub = 'Unknown';
-    $version = "";
 
     $matches = array();
 
@@ -55,32 +61,37 @@ class Browser
 
 ////// BROWSER NAME DETECTION //////////////////////////////////////////////////////////////////////////////////////////
 
-    // Next get the name of the useragent yes seperately and for good reason
+    // INTERNET FUCKING EXPLORER
     if (preg_match('/MSIE/i', $userAgent) && !preg_match('/Opera/i', $userAgent)) {
       $browserName = 'IE';
       $ub = 'MSIE';
     }
+    // SMOKIN' FIREFOX
     elseif (preg_match('/Firefox/i', $userAgent)) {
       $browserName = 'Firefox';
     }
+    // SLICK CHROME
     elseif (preg_match('/Chrome/i', $userAgent)) {
       $browserName = 'Chrome';
     }
+    // EXP[AE]NSIVE SAFARI
     elseif (preg_match('/Safari/i', $userAgent)) {
       $browserName = 'Safari';
     }
+    // GEEKY OPERA
     elseif (preg_match('/Opera/i', $userAgent)) {
       $browserName = 'Opera';
     }
+    // DUSTY NETSCAPE
     elseif (preg_match('/Netscape/i', $userAgent)) {
       $browserName = 'Netscape';
     }
 
     if (empty($ub)) $ub = $browserName;
 
-    // finally get the correct version number
+    // finally get the correct browserVersion number
     $known = array('Version', $ub, 'other');
-    $pattern = '#(?<browser>' . join('|', $known) . ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+    $pattern = '#(?<browser>' . join('|', $known) . ')[/ ]+(?<browserVersion>[0-9.|a-zA-Z.]*)#';
     if (!preg_match_all($pattern, $userAgent, $matches)) {
       // we have no matching number just continue
     }
@@ -89,37 +100,30 @@ class Browser
     $i = count($matches['browser']);
     if ($i != 1) {
       //we will have two since we are not using 'other' argument yet
-      //see if version is before or after the name
+      //see if browserVersion is before or after the name
       if (strripos($userAgent, "Version") < strripos($userAgent, $ub)) {
-        $version = $matches['version'][0];
+        $browserVersion = $matches['browserVersion'][0];
       }
       else {
-        $version = $matches['version'][1];
+        $browserVersion = $matches['browserVersion'][1];
       }
     }
     else {
-      $version = $matches['version'][0];
+      $browserVersion = $matches['browserVersion'][0];
     }
 
     // check if we have a number
-    if ($version == null || $version == "") {
-      $version = "?";
+    if ($browserVersion == null || $browserVersion == "") {
+      $browserVersion = "?";
     }
 
     $this->userAgent = $userAgent;
     $this->browserName = $browserName;
-    $this->browserVersion = $version;
+    $this->browserVersion = $browserVersion;
     $this->platformName = $platformName;
     $this->platformVersion = $platformVersion;
     $this->pattern = $pattern;
 
-    return array(
-      'userAgent' => $userAgent,
-      'name' => $browserName,
-      'version' => $version,
-      'platform' => $platformName,
-      'pattern' => $pattern
-    );
   }
 
 //// ACCESSORS /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,6 +156,21 @@ class Browser
   public function getPattern()
   {
     return $this->pattern;
+  }
+
+  /**
+   * Returns all the data we extracted from the userAgent string, as an associative array
+   * @return array
+   */
+  public function getData()
+  {
+    return array (
+      'userAgent'       => $this->userAgent,
+      'browserName'     => $this->browserName,
+      'browserVersion'  => $this->browserVersion,
+      'platformName'    => $this->platformName,
+      'platformVersion' => $this->platformVersion
+    );
   }
 
 }
