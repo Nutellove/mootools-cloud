@@ -199,7 +199,7 @@ Fx.CSS.Parsers.extend({
 
   TransformScale: {
     parse: function(value) {
-      return ((value = value.match(/^scale\(([0-9]+\.?[0-9]*)\)$/i))) ? value[1] : false;
+      return ((value = value.match(/^scale\(([0-9]+\.?[0-9]*)\)$/i))) ? value[1].toFloat() : false;
     },
     compute: function(from, to, delta) {
       return Fx.compute(from, to, delta);
