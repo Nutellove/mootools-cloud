@@ -2,6 +2,9 @@
 
 /**
  * Detects stuff about the visitor from the UserAgent header string
+ *
+ * @author Antoine Goutenoir <antoine@goutenoir.com>
+ * @version 0.5
  */
 class UserAgent
 {
@@ -56,6 +59,10 @@ class UserAgent
     }
     // WINDOW$
     elseif (preg_match('/windows|win32/i', $userAgent)) {
+      $platformName = 'Windows';
+    }
+    // WINDOW$ MEDIA PLAYER
+    elseif (preg_match('/nsplayer/i', $userAgent)) {
       $platformName = 'Windows';
     }
 
