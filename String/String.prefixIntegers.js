@@ -1,3 +1,23 @@
+/*
+---
+description: Forces the string representing an integer to have numberOfDigits digits at least, by prepending zeroes
+
+authors:
+  - Antoine Goutenoir <antoine@goutenoir.com>
+
+license:
+  - MIT-style license
+
+requires:
+  - Core
+
+provides:
+  - String.forceDigits
+  - String.prefixIntegers
+  - Number.forceDigits
+  - Number.prefixIntegers
+...
+*/
 String.implement({
 
   /**
@@ -5,18 +25,27 @@ String.implement({
    * @param  numberOfDigits The minimum number of digits you want
    * @return string
    */
-  prefixIntegers: function (numberOfDigits) {
-    if (this.substr(0,1) == '-') return '-' + this.substr(1).prefixIntegers(numberOfDigits);
-    return (Array(numberOfDigits).join('0') + this).slice(-numberOfDigits);
-  },
-
-  /**
-   * Alias for prefixIntegers
-   * @param numberOfDigits
-   * @return string
-   */
   forceDigits: function (numberOfDigits) {
-    return this.prefixIntegers(numberOfDigits);
+    if (this.substr(0,1) == '-') return '-' + this.substr(1).forceDigits(numberOfDigits);
+    return (new Array(numberOfDigits).join('0') + this).slice(-numberOfDigits);
   }
 
 });
+
+String.alias('forceDigits', 'prefixIntegers');
+
+
+Number.implement({
+
+  /**
+   * Forces the string representing an integer to have numberOfDigits digits at least, by prepending zeroes
+   * @param  numberOfDigits The minimum number of digits you want
+   * @return string
+   */
+  forceDigits: function (numberOfDigits) {
+    return this.toString().forceDigits(numberOfDigits);
+  }
+
+});
+
+Number.alias('forceDigits', 'prefixIntegers');
