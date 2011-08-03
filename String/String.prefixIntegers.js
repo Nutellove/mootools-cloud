@@ -32,7 +32,7 @@ String.implement({
 
 });
 
-String.alias('forceDigits', 'prefixIntegers');
+String.alias('prefixIntegers', 'forceDigits');
 
 
 Number.implement({
@@ -48,4 +48,4 @@ Number.implement({
 
 });
 
-Number.alias('forceDigits', 'prefixIntegers');
+Number.alias('prefixIntegers', 'forceDigits');

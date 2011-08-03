@@ -1,6 +1,4 @@
 /**
- * Make a number in the innerText of a DOM Element smoothly change from one value to another
- *
  * Example usage :
  *
  *  var tickerFx = new Fx.Ticker ('results_count', {
@@ -12,24 +10,44 @@
  *  or
  *  tickerFx.start(100); // from parameter is optional
  */
+
+/*
+---
+
+description: Make a number in the innerText of a DOM Element smoothly change from one value to another
+
+authors:
+  - Antoine Goutenoir <antoine@goutenoir.com>
+
+requires:
+  - Fx
+
+provides:
+  - Fx.Ticker
+  - Element.ticker
+
+...
+*/
 Fx.Ticker = new Class({
 
   Extends: Fx,
 
-  initialize: function(element, options)
-  {
+  options: {
+    // Function to mutate the value just before it is printed
+    transformer: Function.from()
+  },
+
+  initialize: function(element, options) {
     this.parent(options);
     this.element = document.id(element);
   },
 
-  set: function(value)
-  {
-    this.element.set('text', value.round());
+  set: function(value) {
+    this.element.set('text', this.options.transformer(value.round()));
     return this;
   },
 
-  start: function(from, to)
-  {
+  start: function(from, to) {
     if (typeof to == 'undefined') {
       to = from;
       from = this.element.get('text');
@@ -40,31 +58,6 @@ Fx.Ticker = new Class({
       }
     }
     return this.parent (from, to);
-  }
-
-});
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-Element.implement ({
-
-  ticker: function(from, to, options)
-  {
-    if (!this.tickerFx) {
-      var defaultOptions = {
-        duration: 3300,
-        transition: 'quad:out',
-        link: 'cancel'
-      };
-      this.tickerFx = new Fx.Ticker (this, Object.merge(defaultOptions, options));
-    }
-    if (arguments.length == 1) {
-      this.tickerFx.start (from);
-    } else {
-      this.tickerFx.start (from, to);
-    }
-
-    return this.tickerFx;
   }
 
 });
