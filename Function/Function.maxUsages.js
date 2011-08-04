@@ -7,7 +7,7 @@ authors:
   - Antoine Goutenoir <antoine@goutenoir.com>
 
 license:
-  - MIT-style license
+  - to code
 
 requires:
   - Core

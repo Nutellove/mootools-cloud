@@ -1,8 +1,23 @@
-/**
- * This class manages a smoothly sequential morphing of children elements of passed element
- *
- * @author Antoine Goutenoir <antoine@goutenoir.com>
- */
+/*
+---
+description: This class manages a smoothly sequential morphing of children elements of passed element.
+             The smoothness spans to options.concurrentialMorphs elements
+
+authors:
+  - Antoine Goutenoir <antoine@goutenoir.com>
+
+licence:
+  - lulz
+
+requires:
+  - Options
+  - Chain
+  - Events
+
+provides:
+  - SmoothSequentialMorph
+...
+*/
 SmoothSequentialMorph = new Class({
 
   Implements: [Options, Chain, Events],
@@ -10,7 +25,7 @@ SmoothSequentialMorph = new Class({
   options: {
     // Duration of one morph fx
     morphDuration: 500,
-    // Number of concurrential morphs at any time (except start and complete)
+    // Number of concurrential morphs at any time (except briefly on start and on complete)
     concurrentialMorphs: 3,
     // Exclude elements responding to this css selector (leave empty to exclude none, a good value is '.hidden *')
     excludedCssSelector: '',
@@ -19,9 +34,9 @@ SmoothSequentialMorph = new Class({
     // No setup on instantiation
     noSetup: false
     
-    // onReady: $lambda
-    // onStart: $lambda
-    // onComplete: $lambda
+    // onReady: Function.from
+    // onStart: Function.from
+    // onComplete: Function.from
   },
 
   initialize: function (parentElement, morphProperties, options) {
@@ -41,14 +56,14 @@ SmoothSequentialMorph = new Class({
 
   /**
    * Gets Elements under the parent element that are eligible for sequential morphing :
-   * - leaf-most elements (not containers)
+   * - leaf-most elements (not containers, not brs)
    * - not matching optional excludedCssSelector
    *
    * @return Array
    */
   getMorphingElements: function () {
-    var all = this.parentElement.getElements('*');
-    var leafMost = all.filter(function(item, index){return (item.getFirst() == null)});
+    var all = this.parentElement.getElements('*:not(br)');
+    var leafMost = all.filter(function(item, index){return (item.getFirst('*:not(br)') == null)});
     
     if (this.options.excludedCssSelector != '') {
       var excluded = this.parentElement.getElements(this.options.excludedCssSelector);

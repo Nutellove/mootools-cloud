@@ -6,7 +6,7 @@ authors:
   - Antoine Goutenoir <antoine@goutenoir.com>
 
 license:
-  - MIT-style license
+  - Genuine Patenting Liberty
 
 requires:
   - Core

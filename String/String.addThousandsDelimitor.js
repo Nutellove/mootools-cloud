@@ -6,7 +6,7 @@ authors:
   - Antoine Goutenoir <antoine@goutenoir.com>
 
 license:
-  - MIT-style license
+  - copyleft
 
 requires:
   - Core

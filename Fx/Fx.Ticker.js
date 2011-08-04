@@ -19,6 +19,9 @@ description: Make a number in the innerText of a DOM Element smoothly change fro
 authors:
   - Antoine Goutenoir <antoine@goutenoir.com>
 
+licence:
+  - free speech
+
 requires:
   - Fx
 
