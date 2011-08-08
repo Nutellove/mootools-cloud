@@ -5,9 +5,6 @@ description: Adds smooth scrolling behavior on mousewheel, up, down, pageup, pag
 authors:
   - Antoine Goutenoir <antoine@goutenoir.com>
 
-license:
-  - To georges <3
-
 requires:
   - Options
   - Events
@@ -37,13 +34,19 @@ var PageSmoothScroll = new Class({
 		this.container = document.id(this.options.container);
 
     this.position = 0; // this.container.getScroll().y is always 0
-    this.containerHeight = this.container.getScrollSize().y;
 
+    this.scrollFxTransition = new Fx.Transition(function(pos, x){
+      if (pos < 0.5) {
+        return 1.5 * pos;
+      } else {
+        return 2*(pos-1)*(pos-1)*(pos-1) + 1;
+      }
+    });
 
     this.scrollFx = new Fx.Scroll (this.container, Object.merge({
       link: 'cancel',
-      transition: 'expo:out',
-      duration: 300,
+      transition: this.scrollFxTransition.easeIn,
+      duration: 350,
       onStart: function() {
         this.inUse = true;
       }.bind(this),
@@ -60,6 +63,7 @@ var PageSmoothScroll = new Class({
 	addListeners: function() {
     // WINDOW RESIZE
     this.onResizeListener();
+    document.id(window).addEvent('load', this.onResizeListener.bind(this));
     document.id(window).addEvent('resize', this.onResizeListener.bind(this));
 
     // PAGE SCROLL (for when the user modifies the scroll position via scroll bar drag'n drop, and initial value)
@@ -72,7 +76,6 @@ var PageSmoothScroll = new Class({
 
     // MOUSEWHEEL
     this.container.addEvent('mousewheel', function(event){
-      event = new Event(event);
       event.stop();
       this.updatePosition(-1 * this.options.wheelScrollStep * event.wheel);
       this.start();
@@ -80,6 +83,7 @@ var PageSmoothScroll = new Class({
 
     // KEYS UP & DOWN & PGUP & PGDOWN
     this.container.addEvent('keydown', function(event){
+      event = new Event(event);
       if (event.key == 'up') {
         event.stop();
         this.updatePosition(-1 * this.options.upScrollStep);
@@ -98,20 +102,21 @@ var PageSmoothScroll = new Class({
 
     return this;
 	},
-  
+
   updatePosition: function(delta) {
     this.position += delta;
     this.position = Math.max(this.position, 0);
-    this.position = Math.min(this.position, this.containerHeight - this.windowHeight);
+    this.position = Math.min(this.position, this.scrollHeight - this.windowHeight);
   },
 
   onResizeListener: function() {
     this.windowHeight = document.id(window).getSize().y;
+    this.scrollHeight = this.container.getScrollSize().y;
   },
 
-  start: function(position) {
-    if (typeof position == 'undefined' || position == null) position = this.position;
-    this.scrollFx.start(0, position);
+  start: function() {
+    //if (typeof position == 'undefined' || position == null) position = this.position;
+    this.scrollFx.start(0, this.position);
   },
 
   toTop: function() {
@@ -120,11 +125,18 @@ var PageSmoothScroll = new Class({
   },
 
   toBottom: function() {
-    this.position = this.containerHeight - this.windowHeight;
+    this.position = this.scrollHeight - this.windowHeight;
+    this.start();
+  },
+
+  up: function() {
+    this.updatePosition(-2 * this.options.wheelScrollStep);
+    this.start();
+  },
+
+  down: function() {
+    this.updatePosition(2 * this.options.wheelScrollStep);
     this.start();
   }
-
-
-
 
 });
