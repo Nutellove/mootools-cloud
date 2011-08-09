@@ -35,6 +35,9 @@ DcMorphingStrip = new Class({
     this.setupElements();
   },
 
+  getId: function() {
+    return this.stripElement.getProperty('id');
+  },
 
   /**
    * Loops through all the elements that needs morphing, and ask them to update their values
@@ -65,9 +68,14 @@ DcMorphingStrip = new Class({
    * Prepares the scroll morphing of the strip itself according to the options.stripMorph mapping
    */
   setupStripElement: function() {
-    this.morphingElements.push(new DcMorphingElement(this.stripElement, this.options.stripMorph));
+    this.morphingStrip = new DcMorphingElement(this.stripElement, this.options.stripMorph);
+    this.morphingElements.push(this.morphingStrip);
 
     return this;
+  },
+
+  updateMorphingElements: function() {
+
   }
 
 

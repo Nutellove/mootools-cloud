@@ -1,9 +1,9 @@
 /**
  * Element that morphes itself according to the page scroll position
- * Example of a marker (pass an object of them):
+ * Example of a mapping (pass an object of them):
       'margin-left': [
         { position: 0,   value: -150 },
-        { position: 200, value:   0  },
+        { position: 150, value:   0  },
         { position: 300, value:  500 }
       ]
  * or
@@ -15,25 +15,40 @@
  *
  * These map information from scroll position to style value
  * The percent value is calculated as such :
- * - 0% means the element has just entered the visible window area (from the bottom)
- * - 100% means the element has just disappeared from the visible window area (behind the top)
+ * - 0% means the element's top  has just entered the visible window area (from the bottom)
+ * - 100% means the element's bottom has just disappeared from the visible window area (behind the top)
  *
+ * The origins option looks like :
+ * {'margin-left': 50}
+ * and provides a reference value from which the mapping will relatively differ. Default is 0.
  *
+ * @author Antoine Goutenoir <antoine@goutenoir.com>
  */
 DcMorphingElement = new Class({
 
   Implements: Options,
 
   options: {
-    
+    // For when you manipulate top property with percent markers
+    defaultTop: 0,
+    origins: {},
+    debug: false
   },
 
-  initialize: function(element, markers, options) {
+  initialize: function(element, mappings, options) {
     this.element = document.id(element);
-    this.markers = markers;
+    this.mappings = mappings;
     this.setOptions(options);
 
     this.updateMarkers();
+  },
+
+  log: function() {
+    if (this.options.debug && console && console.log) {
+      console.log ([this.element.getProperty('id')].append(arguments));
+    }
+
+    return this;
   },
 
   /**
@@ -43,14 +58,28 @@ DcMorphingElement = new Class({
   updateMarkers: function () {
     var d = this.element.getCoordinates();
     var w = document.id(window).getSize();
-    Object.each(this.markers,function(markers){
+    var top = this.element.getStyle('top');
+    var topDiff = ((top=='auto') ? 0 : top.toInt()) - this.options.defaultTop;
+
+    Object.each(this.mappings,function(markers, property){
       markers.each(function(marker){
+        // Calculate position value from percent value
         if (typeof marker.percent != 'undefined') {
           var p = marker.percent;
           marker.position = d.top + ( (p-100) * w.y + p * d.height ) / 100;
+          // Exception for top property
+          if (property == 'top') marker.position = marker.position - topDiff;
         }
-      });
-    });
+        // Update absolute value from relative value and origin
+        if (this.options.origins.hasOwnProperty(property)) {
+          marker.absValue = marker.value + this.options.origins[property];
+        } else {
+          marker.absValue = marker.value;
+        }
+      }.bind(this));
+    }.bind(this));
+    
+    this.log("Markers after update", this.mappings);
 
     return this;
   },
@@ -69,23 +98,23 @@ DcMorphingElement = new Class({
    * @param position
    */
   getPropertyValueFromPosition: function (property, position) {
-    var markers = (this.markers)[property],
+    var markers = (this.mappings)[property],
         i = 0,
         // Lower Boundary
         posLB = markers[0].position,
-        valLB = markers[0].value;
+        valLB = markers[0].absValue;
 
     while (i < markers.length) {
       if (markers[i].position < position) {
         posLB = markers[i].position;
-        valLB = markers[i].value;
+        valLB = markers[i].absValue;
         i++;
       } else if (markers[i].position > position && markers[i].position != posLB) {
-        return (markers[i].value - valLB) * (position - posLB) / (markers[i].position - posLB) + valLB;
+        return (markers[i].absValue - valLB) * (position - posLB) / (markers[i].position - posLB) + valLB;
       } else if (markers[i].position > position && markers[i].position == posLB) {
         return valLB;
       } else {
-        return markers[i].value;
+        return markers[i].absValue;
       }
     }
 
@@ -94,13 +123,15 @@ DcMorphingElement = new Class({
 
   setPropertyValueFromPosition: function (property, position) {
     this.element.setStyle(property, this.getPropertyValueFromPosition(property, position));
-    //this.element.tween(property, this.getPropertyValueFromPosition(property, position)); // slooow
   },
 
 
-  // @api
+  /**
+   * Bind this method to the ticker of a ScrollSpy for example
+   * @param position
+   */
   setPropertiesValuesFromPosition: function (position) {
-    Object.each(this.markers, function(item, key){
+    Object.each(this.mappings, function(item, key){
       this.setPropertyValueFromPosition(key, position);
     }, this);
   }
