@@ -1,14 +1,27 @@
-/**
- * Makes the passed elements become absolute and wraps them in a container so that their visual appearance
- * does not change. This script is useful when you have an absolute-positioned design layer and you want a few elements
- * below to still react to mouse events.
- *
- * BEWARE :
- * - Weird fix for firefox buggy onLoad window Event
- * - Ugly fix for IE element width (incrementing wrapper's width by 1)
- *
- * @author Antoine Goutenoir <antoine@goutenoir.com>
- */
+/*
+---
+description: Absolutify
+             Makes the passed elements become absolute and wraps them in a container so that their visual appearance
+             does not change. This script is useful when you have an absolute-positioned design layer
+             and you want a few elements below to still react to mouse events.
+
+             BEWARE :
+               - Weird fix for firefox buggy onLoad window Event (???)
+               - Ugly fix for IE element width (incrementing wrapper's width by 1)
+
+authors:
+  - Antoine Goutenoir <antoine@goutenoir.com>
+
+license:
+  - Absolute licence
+
+requires:
+  - Options
+
+provides:
+  - Absolutify
+...
+*/
 Absolutify = new Class({
 
   Implements: [Options],
@@ -44,10 +57,6 @@ Absolutify = new Class({
   absolutifyElement: function(element) {
     var styles = element.getStyles('position','float','top','left','margin');
     var coords = element.getCoordinates();
-    
-//    log ("Element getCoordinates()",coords);
-//    log ("Element getStyles()",styles);
-//    log ("Element getSize()",element.getSize());
 
     if (styles.position != 'absolute') {
 

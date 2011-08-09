@@ -1,10 +1,9 @@
 /*
 ---
-description:     ScrollSpy
+description: ScrollSpy
 
 authors:
   - David Walsh (http://davidwalsh.name)
-  - Antoine Goutenoir <antoine@goutenoir.com>
 
 license:
   - MIT-style license
