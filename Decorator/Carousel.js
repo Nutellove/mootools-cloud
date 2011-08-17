@@ -30,6 +30,8 @@ var Carousel = new Class({
     useTween: true // if false, will use a setStyle (if you used CSS3 transitions)
     // onFirst: Function.from
     // onLast:  Function.from
+    // onPrev:  Function.from
+    // onNext:  Function.from
 	},
 
 	initialize: function(carousel, options) {
@@ -101,6 +103,7 @@ var Carousel = new Class({
     if (this.currentPage > 1) {
       this.currentPage--;
       this.goToPage(this.currentPage);
+      this.fireEvent('prev');
     }
   },
 
@@ -112,6 +115,7 @@ var Carousel = new Class({
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
       this.goToPage(this.currentPage);
+      this.fireEvent('next');
     }
   },
 
