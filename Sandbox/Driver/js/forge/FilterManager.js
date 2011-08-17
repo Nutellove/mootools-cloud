@@ -1,10 +1,24 @@
-/**
- * Manages the handles that will filter the container's elements
- * The rel attribute of the handle must match the class of an element for this element to be shown
- * If the rel is empty, all elements are shown
- *
- * @author Antoine Goutenoir <antoine@goutenoir.com>
- */
+/*
+---
+description: FilterManager v1.1
+             Manages the handles that will filter the container's elements
+             The rel attribute of the handle must match the class of an element for this element to be shown
+             If the rel is empty, all elements are shown
+
+authors:
+  - Antoine Goutenoir <antoine@goutenoir.com>
+
+license:
+  - MIGHT-style license
+
+requires:
+  - Core/Options
+  - Core/Events
+
+provides:
+  - FilterManager
+...
+*/
 FilterManager = new Class({
 
   Implements: [Options, Events],
@@ -13,10 +27,10 @@ FilterManager = new Class({
     handleActivationEvent: 'click',
     handleActivatedClass:  'active',
     handleTaggingProperty: 'rel'
-    //onBeforeHide: $lambda
-    //onAfterHide: $lambda
-    //onBeforeShow: $lambda
-    //onAfterShow: $lambda
+    //onBeforeHide: Function.from
+    //onAfterHide:  Function.from
+    //onBeforeShow: Function.from
+    //onAfterShow:  Function.from
   },
 
   initialize: function (container, handles, options) {
