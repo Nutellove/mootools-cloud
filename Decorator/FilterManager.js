@@ -51,7 +51,7 @@ FilterManager = new Class({
       // Attach the activation event
       handle.addEvent(this.options.handleActivationEvent, function(event){
         if (that.options.stopEventPropagation) event.stop();
-        if (!this.hasClass(that.options.handleActivatedClass)) {
+        if (!this.hasClass(that.options.handleActivatedClass) && !this.hasClass(that.options.handleEmptyClass)) {
           var rel = this.getProperty(that.options.handleTaggingProperty);
           that.filterContent (rel);
           if (that.options.handleActivatedClass) {
