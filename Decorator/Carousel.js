@@ -38,7 +38,7 @@ var Carousel = new Class({
     this.setOptions(options);
     this.container = document.id(carousel);
     this.frame = this.container.getParent();
-    this.elements = this.container.getElements('article');
+    this.elements = this.container.getChildren();
 
     this.stepSize = this.elements[0].getSize().x;
     this.elementsPerPage = Math.floor(this.frame.getSize().x / this.stepSize);
