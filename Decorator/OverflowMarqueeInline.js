@@ -1,28 +1,39 @@
-/**
- * This makes a div behave like a marquee on mouseover because it is too big and overflows in its parent frame.
- * For when you have user-content that might be too large for the designed frame, you hide the overflow and show it
- * with a marquee-like effect on a mouseover.
- * It only acts like horizontal marquee, though.
- *
- *
- * @param mixed  el    Element to link on
- * @param string event Name of the trigger event
- *
- * @option int speed The speed of the translation animation, in pixels per second
- * @option string eventStart Name of the event that starts the text translation
- * @option string eventStop  Name of the event that reverts the text translation to origin
- *
- * @source https://github.com/Nutellove/mootools-cloud
- * @require MooTools 1.3+
- * @licence GNU/GPL
- * @version 0.3
- * 
- */
+/*
+---
+description: OverflowMarqueeInline
+             This makes a div behave like a marquee on mouseover because it is too big and overflows in its parent frame.
+             For when you have user-content that might be too large for the designed frame, you hide the overflow and show it
+             with a marquee-like effect on a mouseover.
+             It only acts like horizontal marquee, though.
+             
+             @param mixed  el    Element to link on
+             @param string event Name of the trigger event
+
+             @option int speed The speed of the translation animation, in pixels per second
+             @option string eventStart Name of the event that starts the text translation
+             @option string eventStop  Name of the event that reverts the text translation to origin
+
+authors:
+  - Antoine Goutenoir <antoine@goutenoir.com>
+
+version: 0.3
+
+license:
+  - MIGHT-style license
+
+requires:
+  - Options
+  - Fx.Tween
+
+provides:
+  - OverflowMarqueeInline
+...
+*/
 var OverflowMarqueeInline = new Class({
 
   Implements: [Options],
   options: {
-    speed      : 30,         // in pixels/second
+    speed      : 30,         // speed, in pixels/second
     eventStart : 'mouseenter',
     eventStop  : 'mouseleave'
   },
@@ -34,7 +45,6 @@ var OverflowMarqueeInline = new Class({
 
     // Binding the event that will start the marquee effect if necessary
     if (this.isNeeded()) {
-      //this.prepareElements();
 
       // START Event
       this.el.addEvent(this.options.eventStart, function(e){
