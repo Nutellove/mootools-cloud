@@ -2,7 +2,7 @@
 ---
 description: Carousel, a simple but effective horizontal carousel
 
-version: 1.1
+version: 1.2
 
 authors:
   - Antoine Goutenoir <antoine@goutenoir.com>
@@ -31,7 +31,8 @@ var Carousel = new Class({
     counterCurrent: null, // id or Element of the holder of the current page number
     useTween: true, // if false, will use a setStyle (if you used CSS3 transitions)
     nbOfRowsPerPage: 1,
-    nbOfColsPerPage: 1
+    nbOfColsPerPage: 1,
+    reorderElements: true // will tally dummies and reorder elements if nbOfRows > 1
     // onFirst: Function.from
     // onLast:  Function.from
     // onPrev:  Function.from
@@ -51,6 +52,8 @@ var Carousel = new Class({
     this.totalPages = Math.ceil(this.countElements() / this.elementsPerPage);
 
     this.container.setStyle('width', this.pageWidth * this.totalPages);
+
+    if (this.options.reorderElements) this.reorderElements();
 
     if (this.options.counterTotal) {
       document.id(this.options.counterTotal).set('text', this.totalPages);
@@ -125,6 +128,43 @@ var Carousel = new Class({
 
   nextButtonOnClick: function() {
     this.nextPage();
+  },
+
+  reorderElements: function() {
+    var cols = this.options.nbOfColsPerPage;
+    var rows = this.options.nbOfRowsPerPage;
+
+    if (rows < 2) return this;
+
+    var s = this.elements.length;
+    var nbDummies = ((rows * cols) - (s % (rows * cols))) % (rows * cols);
+    var n;
+
+    // Tally dummy elements
+    if (nbDummies > 0) {
+      var dummy;
+      for (var k = 0 ; k < nbDummies ; k++) {
+        dummy = this.elements[0].clone();
+        dummy.setStyle('visibility','hidden');
+        this.elements.push (dummy);
+      }
+      s += nbDummies;
+    }
+
+    var newOrder = [];
+
+    this.elements.each(function(el, i){
+      n = Math.floor(i/rows) + (i%rows)*(cols*this.totalPages); // magic happens here
+      newOrder[n] = el;
+    }.bind(this));
+
+    this.elements = newOrder;
+
+    this.elements.each(function(el){
+      el.inject(this.container);
+    }.bind(this));
+
+    return this;
   }
 
 
