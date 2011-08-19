@@ -5,7 +5,7 @@ description: Carousel, a simple but effective horizontal carousel
 version: 1.2
 
 authors:
-  - Antoine Goutenoir <antoine@goutenoir.com>
+- Antoine Goutenoir <antoine@goutenoir.com>
 
 license:
   - MIGHT-style license
@@ -21,9 +21,9 @@ provides:
 */
 var Carousel = new Class({
 
-	Implements: [Options, Events],
+  Implements: [Options, Events],
 
-	options: {
+  options: {
     prevButton: null, // id or Element of the prev button
     nextButton: null, // id or Element of the next button
     disabledClass: 'disabled', // Class to give to the next/prev buttons when we're at extrema
@@ -37,9 +37,9 @@ var Carousel = new Class({
     // onLast:  Function.from
     // onPrev:  Function.from
     // onNext:  Function.from
-	},
+  },
 
-	initialize: function(carousel, options) {
+  initialize: function(carousel, options) {
     this.setOptions(options);
     this.container = document.id(carousel);
     this.frame = this.container.getParent();
@@ -85,13 +85,13 @@ var Carousel = new Class({
     if (this.options.nextButton) document.id(this.options.nextButton).removeClass(this.options.disabledClass);
 
     // If we're at the first page
-    if ( page == 1 ) {
+    if (page == 1) {
       if (this.options.prevButton) document.id(this.options.prevButton).addClass(this.options.disabledClass);
       this.fireEvent('first');
     }
 
     // If we're at the last page
-    if ( page == this.totalPages ) {
+    if (page == this.totalPages) {
       if (this.options.nextButton) document.id(this.options.nextButton).addClass(this.options.disabledClass);
       this.fireEvent('last');
     }
@@ -143,24 +143,24 @@ var Carousel = new Class({
     // Tally dummy elements
     if (nbDummies > 0) {
       var dummy;
-      for (var k = 0 ; k < nbDummies ; k++) {
+      for (var k = 0; k < nbDummies; k++) {
         dummy = this.elements[0].clone();
-        dummy.setStyle('visibility','hidden');
-        this.elements.push (dummy);
+        dummy.setStyle('visibility', 'hidden');
+        this.elements.push(dummy);
       }
       s += nbDummies;
     }
 
     var newOrder = [];
 
-    this.elements.each(function(el, i){
-      n = Math.floor(i/rows) + (i%rows)*(cols*this.totalPages); // magic happens here
+    this.elements.each(function(el, i) {
+      n = Math.floor(i / rows) + (i % rows) * (cols * this.totalPages); // magic happens here
       newOrder[n] = el;
     }.bind(this));
 
     this.elements = newOrder;
 
-    this.elements.each(function(el){
+    this.elements.each(function(el) {
       el.inject(this.container);
     }.bind(this));
 
