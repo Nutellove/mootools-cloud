@@ -2,6 +2,8 @@
 ---
 description: Carousel, a simple but effective horizontal carousel
 
+version: 1.1
+
 authors:
   - Antoine Goutenoir <antoine@goutenoir.com>
 
@@ -22,12 +24,14 @@ var Carousel = new Class({
 	Implements: [Options, Events],
 
 	options: {
-    prevButton: null, // id or Element of the previous button
+    prevButton: null, // id or Element of the prev button
     nextButton: null, // id or Element of the next button
     disabledClass: 'disabled', // Class to give to the next/prev buttons when we're at extrema
     counterTotal:   null, // id or Element of the holder of the total number of pages
     counterCurrent: null, // id or Element of the holder of the current page number
-    useTween: true // if false, will use a setStyle (if you used CSS3 transitions)
+    useTween: true, // if false, will use a setStyle (if you used CSS3 transitions)
+    nbOfRowsPerPage: 1,
+    nbOfColsPerPage: 1
     // onFirst: Function.from
     // onLast:  Function.from
     // onPrev:  Function.from
@@ -40,13 +44,13 @@ var Carousel = new Class({
     this.frame = this.container.getParent();
     this.elements = this.container.getChildren();
 
-    this.stepSize = this.elements[0].getSize().x;
-    this.elementsPerPage = Math.floor(this.frame.getSize().x / this.stepSize);
+    this.pageWidth = this.elements[0].getSize().x * this.options.nbOfColsPerPage;
+    this.elementsPerPage = this.options.nbOfRowsPerPage * this.options.nbOfColsPerPage;
 
     this.currentPage = 1;
     this.totalPages = Math.ceil(this.countElements() / this.elementsPerPage);
 
-    this.container.setStyle('width', this.stepSize * this.countElements());
+    this.container.setStyle('width', this.pageWidth * this.totalPages);
 
     if (this.options.counterTotal) {
       document.id(this.options.counterTotal).set('text', this.totalPages);
@@ -91,7 +95,7 @@ var Carousel = new Class({
   },
 
   setContainerPropertyToPage: function (page) {
-    var value = (1 - page) * this.stepSize * this.elementsPerPage;
+    var value = (1 - page) * this.pageWidth;
     if (this.options.useTween) {
       this.container.tween('margin-left', value);
     } else {
