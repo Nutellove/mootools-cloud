@@ -2,7 +2,7 @@
 ---
 description: Carousel, a simple but effective horizontal carousel
 
-version: 1.3
+version: 1.4
 
 authors:
 - Antoine Goutenoir <antoine@goutenoir.com>
@@ -158,7 +158,7 @@ var Carousel = new Class({
     var newOrder = [];
 
     this.elements.each(function(el, i) {
-      n = Math.floor(i / rows) + (i % rows) * (cols * this.totalPages); // magic happens here
+      n = Math.floor(i/(rows*cols)) * cols + Math.floor(i/cols)%rows * (cols*this.totalPages) + i%cols; // ;)
       newOrder[n] = el;
     }.bind(this));
 
