@@ -2,7 +2,7 @@
 ---
 description: Carousel, a simple but effective horizontal carousel
 
-version: 1.2
+version: 1.3
 
 authors:
 - Antoine Goutenoir <antoine@goutenoir.com>
@@ -45,7 +45,11 @@ var Carousel = new Class({
     this.frame = this.container.getParent();
     this.elements = this.container.getChildren();
 
-    this.pageWidth = this.elements[0].getSize().x * this.options.nbOfColsPerPage;
+    this.elementWidth = this.elements[0].getSize().x
+                      + this.elements[0].getStyle('margin-left').toInt()
+                      + this.elements[0].getStyle('margin-right').toInt() ;
+
+    this.pageWidth = this.elementWidth * this.options.nbOfColsPerPage;
     this.elementsPerPage = this.options.nbOfRowsPerPage * this.options.nbOfColsPerPage;
 
     this.currentPage = 1;
