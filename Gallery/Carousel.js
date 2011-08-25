@@ -70,7 +70,8 @@ var Carousel = new Class({
       document.id(this.options.nextButton).addEvent('click', this.nextButtonOnClick.bind(this));
     }
     if (this.options.prevButton) {
-      document.id(this.options.prevButton).addEvent('click', this.prevButtonOnClick.bind(this));
+      document.id(this.options.prevButton).addClass(this.options.disabledClass)
+                                          .addEvent('click', this.prevButtonOnClick.bind(this));
     }
   },
 
