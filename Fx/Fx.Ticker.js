@@ -37,7 +37,7 @@ Fx.Ticker = new Class({
 
   options: {
     // Function to mutate the value just before it is printed
-    transformer: Function.from
+    transformer: function(o){return o}
   },
 
   initialize: function(element, options) {
