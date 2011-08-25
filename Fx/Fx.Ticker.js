@@ -54,7 +54,7 @@ Fx.Ticker = new Class({
     if (typeof to == 'undefined') {
       to = from;
       from = this.element.get('text');
-      if (typeof from == 'undefined' || from == null || from == '') {
+      if (typeof from == 'undefined' || from === null || from === '') {
         from = 0;
       } else {
         from = from.toInt();
