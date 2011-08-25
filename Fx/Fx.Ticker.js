@@ -64,3 +64,34 @@ Fx.Ticker = new Class({
   }
 
 });
+
+
+Element.Properties.ticker = {
+
+	set: function(options){
+		var ticker = this.retrieve('ticker');
+		if (ticker) ticker.destroy();
+		return this.eliminate('ticker').store('ticker:options', options);
+	},
+
+	get: function(){
+		var ticker = this.retrieve('ticker');
+		if (!ticker){
+			ticker = new Fx.Ticker(this, this.retrieve('ticker:options'));
+			this.store('ticker', ticker);
+		}
+		return ticker;
+	}
+
+};
+
+
+Element.implement({
+
+	ticker: function(to, options){
+		if (options) this.set('ticker', options);
+		this.get('ticker').start(to);
+		return this;
+	}
+
+});
