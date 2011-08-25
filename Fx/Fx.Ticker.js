@@ -1,16 +1,3 @@
-/**
- * Example usage :
- *
- *  var tickerFx = new Fx.Ticker ('results_count', {
- *    duration: 4500,
- *    transition: 'quad:out',
- *    link: 'cancel'
- *  });
- *  tickerFx.start(0,100);
- *  or
- *  tickerFx.start(100); // from parameter is optional
- */
-
 /*
 ---
 
@@ -18,6 +5,9 @@ description: Make a number in the innerText of a DOM Element smoothly change fro
 
 authors:
   - Antoine Goutenoir <antoine@goutenoir.com>
+
+demo:
+  - http://jsfiddle.net/gouttonio/xvzRz
 
 licence:
   - free speech
@@ -37,7 +27,7 @@ Fx.Ticker = new Class({
 
   options: {
     // Function to mutate the value just before it is printed
-    transformer: function(o){return o}
+    transformer: function(i){return i}
   },
 
   initialize: function(element, options) {
