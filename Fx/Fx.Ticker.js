@@ -7,7 +7,7 @@ authors:
   - Antoine Goutenoir <antoine@goutenoir.com>
 
 demo:
-  - http://jsfiddle.net/gouttonio/xvzRz
+  - http://jsfiddle.net/goutte/K6R8k/
 
 licence:
   - free speech
