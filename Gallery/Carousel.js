@@ -4,8 +4,11 @@ description: Carousel, a simple but effective horizontal carousel
 
 version: 1.4
 
+demo:
+  - http://jsfiddle.net/goutte/jkeLe/
+
 authors:
-- Antoine Goutenoir <antoine@goutenoir.com>
+  - Antoine Goutenoir <antoine@goutenoir.com>
 
 license:
   - MIGHT-style license
