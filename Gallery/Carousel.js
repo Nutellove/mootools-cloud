@@ -27,7 +27,7 @@ var Carousel = new Class({
   Implements: [Options, Events],
 
   options: {
-    container:  null,
+    container:  null, // id or Element of the content container, will use the first element of the frame if not set
     prevButton: null, // id or Element of the prev button
     nextButton: null, // id or Element of the next button
     disabledClass: 'disabled', // Class to give to the next/prev buttons when we're at extrema
