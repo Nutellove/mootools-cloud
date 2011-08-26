@@ -27,26 +27,27 @@ var Carousel = new Class({
   Implements: [Options, Events],
 
   options: {
+    container:  null,
     prevButton: null, // id or Element of the prev button
     nextButton: null, // id or Element of the next button
     disabledClass: 'disabled', // Class to give to the next/prev buttons when we're at extrema
     counterTotal:   null, // id or Element of the holder of the total number of pages
     counterCurrent: null, // id or Element of the holder of the current page number
-    useTween: true, // if false, will use a setStyle (if you used CSS3 transitions)
     nbOfRowsPerPage: 1,
     nbOfColsPerPage: 1,
-    reorderElements: true // will tally dummies and reorder elements if nbOfRows > 1
+    useTween:        true, // if false, will use a setStyle (if you used CSS3 transitions)
+    reorderElements: true  // will tally dummies and reorder elements if nbOfRows > 1
     // onFirst: Function.from
     // onLast:  Function.from
     // onPrev:  Function.from
     // onNext:  Function.from
   },
 
-  initialize: function(carousel, options) {
+  initialize: function(frame, options) {
     this.setOptions(options);
-    this.container = document.id(carousel);
-    this.frame = this.container.getParent();
-    this.elements = this.container.getChildren();
+    this.frame     = document.id(frame);
+    this.container = (this.options.container) ? document.id(this.options.container) : this.frame.getFirst();
+    this.elements  = this.container.getChildren();
 
     this.elementWidth = this.elements[0].getSize().x
                       + this.elements[0].getStyle('margin-left').toInt()
