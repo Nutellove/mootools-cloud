@@ -2,8 +2,8 @@
 ---
 description: OverflowMarqueeInline
              This makes a div behave like a marquee on mouseover because it is too big and overflows in its parent frame.
-             For when you have user-content that might be too large for the designed frame, you hide the overflow and show it
-             with a marquee-like effect on a mouseover.
+             For when you have user-content that might be too large for the designed frame,
+             you hide the overflow and show it with a marquee-like effect on a mouseover.
              It only acts like horizontal marquee, though.
              
              @param mixed  el    Element to link on
@@ -42,6 +42,8 @@ var OverflowMarqueeInline = new Class({
     this.setOptions (options);
     this.el    = $(el);
     this.delta = this.el.getScrollSize().x - this.el.getSize().x;
+
+    this.el.setStyle('white-space', 'nowrap');
 
     // Binding the event that will start the marquee effect if necessary
     if (this.isNeeded()) {

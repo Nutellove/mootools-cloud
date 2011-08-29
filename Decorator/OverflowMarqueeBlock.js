@@ -18,7 +18,7 @@
  * @version 0.1
  * 
  */
-var OverflowMarquee = new Class({
+var OverflowMarqueeBlock = new Class({
 
   Implements: [Options],
   options: {
@@ -91,7 +91,7 @@ var OverflowMarquee = new Class({
     if (el == null) {
       el = this.el;
     }
-    return OverflowMarquee.isNeeded(el);
+    return OverflowMarqueeBlock.isNeeded(el);
   }
 
 });
@@ -104,7 +104,7 @@ var OverflowMarquee = new Class({
  * @param  Element el
  * @return boolean
  */
-OverflowMarquee.isNeeded = function (el) {
+OverflowMarqueeBlock.isNeeded = function (el) {
   if (el.getParent().getSize().x < el.getScrollSize().x ||
       el.getParent().getSize().y < el.getScrollSize().y) {
     return true;
