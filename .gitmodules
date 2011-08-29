@@ -1,0 +1,3 @@
+[submodule "Fx/Fx.Ticker"]
+	path = Fx/Fx.Ticker
+	url = git://github.com/Goutte/Fx.Ticker.git
