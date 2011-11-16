@@ -1,7 +1,8 @@
 /*
 ---
-description: This class manages a smoothly sequential morphing of children elements of passed element.
-             The smoothness spans to options.concurrentialMorphs elements
+description: Manages a smoothly sequential morphing of passed elements
+             and of children elements of passed parent element.
+             The smoothness spans to options.concurrentialMorphs elements.
 
 authors:
   - Antoine Goutenoir <antoine@goutenoir.com>
@@ -23,24 +24,36 @@ SmoothSequentialMorph = new Class({
   Implements: [Options, Chain, Events],
 
   options: {
+    //// Provide either this ///////////////////////////////////////////////////////////////////////////////////////////
+    // The id of the parent element from which all leafs will be morphed
+    parentElementId: '',
+    // Exclude elements responding to this css selector (leave empty to exclude none, a good value is '.hidden *')
+    excludedCssSelector: '',
+    //// Or this ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    morphedElements: [],
+    //// Common options ////////////////////////////////////////////////////////////////////////////////////////////////
     // Duration of one morph fx
     morphDuration: 500,
     // Number of concurrential morphs at any time (except briefly on start and on complete)
     concurrentialMorphs: 3,
-    // Exclude elements responding to this css selector (leave empty to exclude none, a good value is '.hidden *')
-    excludedCssSelector: '',
     // Apply these styles to morphed elements before launching chaining
     initialCss: {},
     // No setup on instantiation
     noSetup: false
-    
+
     // onReady: Function.from
     // onStart: Function.from
     // onComplete: Function.from
   },
 
-  initialize: function (parentElement, morphProperties, options) {
-    this.parentElement = document.id(parentElement);
+  /**
+   * There are mandatory options, see above
+   * Please note that if you provide both parentElementId and morphedElements, they will be combined without duplicates
+   *
+   * @param morphProperties See Fx.Morph start() parameter
+   * @param options
+   */
+  initialize: function (morphProperties, options) {
     this.morphProperties = morphProperties;
     this.setOptions(options);
 
@@ -56,21 +69,32 @@ SmoothSequentialMorph = new Class({
 
   /**
    * Gets Elements under the parent element that are eligible for sequential morphing :
-   * - leaf-most elements (not containers, not brs)
+   * - leaf-most elements (not containers)
    * - not matching optional excludedCssSelector
+   *
+   * Adds the elements provided in option morphedElements
    *
    * @return Array
    */
   getMorphingElements: function () {
-    var all = this.parentElement.getElements('*:not(br)');
-    var leafMost = all.filter(function(item, index){return (item.getFirst('*:not(br)') == null)});
-    
-    if (this.options.excludedCssSelector != '') {
-      var excluded = this.parentElement.getElements(this.options.excludedCssSelector);
-      return leafMost.filter(function(item, index){return !excluded.contains(item)});
-    } else {
-      return leafMost;
+    var leafMost = [];
+
+    if (this.options.parentElementId != '') {
+      var parentElement = document.id (this.options.parentElementId);
+      var all = parentElement.getElements('*:not(br)');
+      leafMost = all.filter(function(item, index){return (item.getFirst('*:not(br)') == null)});
+
+      if (this.options.excludedCssSelector != '') {
+        var excluded = parentElement.getElements(this.options.excludedCssSelector);
+        leafMost = leafMost.filter(function(item, index){return !excluded.contains(item)});
+      }
     }
+
+    if (this.options.morphedElements.length > 0) {
+      leafMost = leafMost.combine(this.options.morphedElements);
+    }
+
+    return leafMost;
   },
 
 
@@ -102,7 +126,7 @@ SmoothSequentialMorph = new Class({
       for (var j = 0 ; j < elements[i].length ; j++) {
 
         chains[i].chain(function(){
-          
+
           var i = arguments[0],
               j = arguments[1];
 
@@ -116,7 +140,7 @@ SmoothSequentialMorph = new Class({
           elements[i][j].morph(self.morphProperties);
 
         }.bind(chains[i],i,j)); // moo goodness :]
-        
+
       }
     }
 
