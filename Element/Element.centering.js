@@ -11,7 +11,7 @@ Element.implement ({
    * @return Element This Element
    */
   centerVertically: function(parent){
-    parent = $(parent); if (!parent) parent = this.getParent();
+    parent = document.id(parent); if (!parent) parent = this.getParent();
     var top = parent.getSize().y / 2 - this.getSize().y / 2;
     if (parent.getStyle('position') == 'static') parent.setStyle('position', 'relative');
     if (this.getStyle('position') == 'static') this.setStyle('position', 'absolute');
@@ -28,7 +28,7 @@ Element.implement ({
    * @return Element This Element
    */
   centerHorizontally: function(parent){
-    parent = $(parent); if (!parent) parent = this.getParent();
+    parent = document.id(parent); if (!parent) parent = this.getParent();
     var left = parent.getSize().x / 2 - this.getSize().x / 2;
     if (parent.getStyle('position') == 'static') parent.setStyle('position', 'relative');
     if (this.getStyle('position') == 'static') this.setStyle('position', 'absolute');
